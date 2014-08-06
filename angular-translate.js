@@ -501,6 +501,7 @@ angular.module('pascalprecht.translate').provider('$translate', [
           return deferred.promise;
         };
         var determineTranslationInstant = function (translationId, interpolateParams, interpolationId) {
+angular.logTranslations(translationId, interpolateParams, interpolationId);
           var result, table = $uses ? $translationTable[$uses] : $translationTable, Interpolator = interpolationId ? interpolatorHashMap[interpolationId] : defaultInterpolator;
           if (table && table.hasOwnProperty(translationId)) {
             var translation = table[translationId];
@@ -881,3 +882,20 @@ angular.module('pascalprecht.translate').filter('translate', [
     };
   }
 ]);
+
+//---------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------
+
+var logged_translations = {}
+var log_tmr
+angular.logTranslations = function(translationId, interpolateParams, interpolationId){
+	logged_translations[translationId] = true
+//	console.log("logTranslations",arguments);
+	clearTimeout(log_tmr);
+	log_tmr = setTimeout(function(){
+		console.log(logged_translations)
+	},100)
+}
+
+
+
